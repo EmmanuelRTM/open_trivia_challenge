@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin =  require('mini-css-extract-plugin');
+const loader = require('sass-loader');
 module.exports = {
     module:{
         rules:[ //Aqui voy a caragar todos los loader que necesito para que webpack trabaje como quiera
@@ -26,6 +27,7 @@ module.exports = {
                 use:[
                     "style-loader",//procesa stilos en linea
                     "css-loader",// procesa estilos en archivos css
+                    "postcss-loader",
                     "sass-loader"//procesa estilos en archivos scss
                 ]//los loader el orden si importa
                     
