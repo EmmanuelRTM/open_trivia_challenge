@@ -150,10 +150,15 @@ function createURLandGetAPI(list){
             //console.log(answer)
             trivia.addQuestions(answer);
             console.log(trivia.getQuestion(4))//example of using the functions
+
            // return answer;
             trivia.setThisCategory(categor);
             trivia.setThisDifficulty(diffi);
             trivia.setThisType(typp);
+            trivia.start();
+
+            //wait button of Ok 
+            //create final button 
         })
         .catch( (err) =>{
 //aqui se pasa el error

@@ -40,67 +40,127 @@ class Trivia{
     getIncorrectAnswer(i){
         return this.questions[0][i].incorrect_answers;
     }
-    /*
+    getAnswersInOne(i){
+        let listOfAnswers=[]
+        listOfAnswers.push(getCorrectAnswer(i))
+        let incorrectAnswers= getIncorrectAnswer(i)
+        for(let j=0; j< incorrectAnswers.length;j++){
+            listOfAnswers.push(incorrectAnswers[j])
+        }
+        console.log(listOfAnswers)
+        return listOfAnswers;
+    }
+    
     divsCartaGrande(){
-        var infoDivs =''
-        var infoDivs_i=''
-        for (var i=0;i<this.pokemons.length;i++){
-            infoDivs_i='<div class="card  col-4 mb-3 ">'
-                    //+'<div class="container">'
-                        +`<img src= ${this.getPokemonImgUrl(this.getPokeId(i))} class="card-img-top" alt="...">`
-                        +'<div class="card-body">'
-                            +'<h5 class="card-title">'
-                                +this.getPokemonName(i)
-                            +'</h5>'
-                            +'<p class="card-text">'
-                //poner condicionante de length
-                                +this.getPokemonType(i)
-                            +'</p>'
-                            +'<p class="card-text">'
-                                +'HP: '+ this.getPokeHP(i)
-                            +'</p>'
-                        +'</div>'
-                    //+ '</div>'
+        console.log("hi big")
+        let infoDivs =''
+        let infoDivs_i=''
+        for (let i=0;i<this.questions[0].length;i++){
+            //let answers = this.getAnswersInOne(i);
+            let answers = []
+            answers.push(this.questions[0][i].correct_answer);
+            let lengthincorrect= this.questions[0][i].incorrect_answers.length
+            for (let j=0;j< lengthincorrect;j++){
+                answers.push(this.questions[0][i].incorrect_answers[j]);
+            }
+            //console.log(answers)
+
+            infoDivs_i='<div class="card  col-7 mb-3 ">'
+                            +'<div class="container">'
+                            +'<section class="formulario ">'
+                                    +'<div class="form-group">'
+
+                                    +`<label for="exampleFormControlSelect1">${this.questions[0][i].question}</label>`
+                                    +`<select class="form-control" id=${i+1}>`
+                                    //for (let j =0 ;j< answers.length;j++){
+                                        //+`<option>${answers[j]}</option>`
+                                        for (  let k=0 ; k< answers.length; k++){
+                                            +`<option>${answers[k]}</option>`
+                                        }
+                                        //+`<option>${i+1}</option>`
+                                    //}
+                                +'</select>'
+
+                            +'</div>'
+                            +'<button class="btn btn-outline-primary" type="button" id="button-addon2">Ok</button>'
+                        +'</section>'
+                    +'</div>'
                 +'</div>'
     
             //console.log(infoDivs_i);
             infoDivs=infoDivs+infoDivs_i
             }
            //console.log(infoDivs)
+        //console.log(infoDivs)
         return infoDivs;
     }
     
     divsCartaChica(){
-        var infoDivs =''
-        var infoDivs_i=''
-        for (var i=0;i<this.pokemons.length;i++){
+        console.log("hi mini")
+        let infoDivs =''
+        let infoDivs_i=''
+        for (let i=0;i<this.questions[0].length;i++){
+            let answers = this.getAnswersInOne(i);
             infoDivs_i='<div class="card  col-7 mb-5">'
-                    +`<img src= ${this.getPokemonImgUrl(this.getPokeId(i))} class="card-img-top" alt="...">`
-                    +'<div class="card-body">'
-                        +'<h5 class="card-title">'
-                            +this.getPokemonName(i)
-                        +'</h5>'
-                        +'<p class="card-text">'
-            //poner condicionante de length
-                            +this.getPokemonType(i)
-                        +'</p>'
-                        +'<p class="card-text">'
-                            +'HP: '+ this.getPokeHP(i)
-                        +'</p>'
+                            +'<div class="container">'
+                            +'<section class="formulario ">'
+                                    +'<div class="form-group">'
+
+                                    +`<label for="exampleFormControlSelect1">${this.questions[0][i].question}</label>`
+                                    +`<select class="form-control" id=${i+1}>`
+                                    //for (let j =0 ;j< answers.length;j++){
+                                        //+`<option>${answers[j]}</option>`
+                                        for (  let k=0 ; k< answers.length; k++){
+                                            +`<option>${answers[k]}</option>`
+                                        }
+                                        //+`<option>${i+1}</option>`
+                                    //}
+                                +'</select>'
+
+                            +'</div>'
+                            +'<button class="btn btn-outline-primary" type="button" id="button-addon2">Ok</button>'
+                        +'</section>'
                     +'</div>'
-                + '</div>'
+                +'</div>'
             
             infoDivs=infoDivs+infoDivs_i
             }
+            console.log(infoDivs)
         //console.log(infoDivs)
         return infoDivs;
-    }*/
+    }
 
     start(){
-        const botonSubmit = document.getElementById('button-addon1')
+        //const botonSubmit = document.getElementById('button-addon1')
+        console.log("hi")
+        console.log(this.questions[0][0])
+        
+        const espacio_libre = document.querySelector('.contenedor'); 
+        let addCardBig = document.createElement('div')
+        addCardBig.setAttribute('class','d-none d-lg-block d-xl-block d-md-none d-xs-none')  
+        addCardBig.setAttribute('id','cartaGrande')            
+        addCardBig.innerHTML = '<div class="row justify-content-center">' + this.divsCartaGrande();
+       // console.log(addCardBig.innerHTML)
+        //console.log(addCardBig);
 
-        botonSubmit.addEventListener('click', function(){
+        /* let addCardSmall = document.createElement('div')
+        addCardSmall.setAttribute('class','d-xs-block d-sm-block d-md-block d-lg-none d-xl-none') 
+        addCardSmall.setAttribute('id','cartaChica')        
+        addCardSmall.innerHTML = '<div class="row justify-content-center">' + this.divsCartaChica();*/
+
+        //console.log(addCardBig);
+        //console.log(addCardSmall);
+        //console.log(espacio_libre);
+
+        espacio_libre.appendChild( addCardBig );
+        //espacio_libre.appendChild( addCardSmall );
+        console.log(espacio_libre);
+
+        //botonSubmit.addEventListener('click', function(){
+         //   console.log("hi2")
             //Obtener valores del formulario.
+                
+                /*
                 let catego = document.getElementById('category')//category
                 let categ_val=catego.value;
                 if (categ_val=='any'){
@@ -124,7 +184,7 @@ class Trivia{
                 }
                 console.log(type_val)
                 this.setThisType(type_val);
-                /*
+
                 if(presupuesto_val>150000){
                     //arrojara un mensaje de checa el modelo que te guste, todos estos solamente estan a tu disposicion
                     mensaje_restrictivo();
@@ -136,25 +196,9 @@ class Trivia{
                // var idAutos=obtenerId(marca_val,modelo_val, presupuesto_val, caja_val);
 
                 //add(autos, this.getAllList());
-        })
 
-        const espacio_libre = document.querySelector('.contenedor'); 
-        let addCardBig = document.createElement('div')
-        addCardBig.setAttribute('class','d-none d-lg-block d-xl-block d-md-none d-xs-none')  
-        addCardBig.setAttribute('id','cartaGrande')            
-        addCardBig.innerHTML = '<div class="row justify-content-center">' + this.divsCartaGrande();
-
-        let addCardSmall = document.createElement('div')
-        addCardSmall.setAttribute('class','d-xs-block d-sm-block d-md-block d-lg-none d-xl-none') 
-        addCardSmall.setAttribute('id','cartaChica')        
-        addCardSmall.innerHTML = '<div class="row justify-content-center">' + this.divsCartaChica();
-
-        //console.log(addCardBig);
-        //console.log(addCardSmall);
-        //console.log(espacio_libre);
-
-        espacio_libre.appendChild( addCardBig );
-        espacio_libre.appendChild( addCardSmall );
+                
+        //})
 
     }
 
