@@ -1,6 +1,10 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin =  require('mini-css-extract-plugin');
 const loader = require('sass-loader');
+//import webpack from 'webpack';
+
+// Try the environment variable, otherwise use root
+//const ASSET_PATH = process.env.ASSET_PATH || '/';
 module.exports = {
     module:{
         rules:[ //Aqui voy a caragar todos los loader que necesito para que webpack trabaje como quiera
@@ -28,6 +32,7 @@ module.exports = {
                     "style-loader",//procesa stilos en linea
                     "css-loader",// procesa estilos en archivos css
                     "postcss-loader",
+                    'resolve-url-loader',//process images
                     "sass-loader"//procesa estilos en archivos scss
                 ]//los loader el orden si importa
                     

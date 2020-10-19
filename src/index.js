@@ -10,15 +10,23 @@ function getCategoryIDByName(category){
     //console.log(category)
     axios.get(urlCateg)
     .then((response)=>{
+        let generated =false;
         let answer= response.data.trivia_categories;
         for (let i =0;i< answer.length;i++){
             if(answer[i].name==category){
-                return answer[i].id;
+                //console.log();
+                generated =true;
+                typeAndDifiicultyGenerator(answer[i].id);
+
+            }
+            if(i===answer.length-1 && generated==false){
+                typeAndDifiicultyGenerator("");
             }
         }
         //console.log(answer)
     }).catch((error)=>{
         console.log(error)
+       // return "problemo";
     })
 }
 //getCategoryNameById("General Knowledge");
@@ -38,6 +46,7 @@ function getCategoryNameByID(category){// 9 to 32
         console.log(error)
     })
 }
+
 function getListOfCategories(){
     let urlCateg=`https://opentdb.com/api_category.php`;
     let listCateg=[]
@@ -48,13 +57,14 @@ function getListOfCategories(){
         for (let i =0;i< answer.length;i++){
             listCateg.push(answer[i].name)
         }
-        return listCateg;
+        console.log(listCateg) ;
         //console.log(answer)
     }).catch((error)=>{
         console.log(error)
     })
 }
-//getListOfCategories();
+const listOfCateg=getListOfCategories();
+
 
 /*
 function createURL(categ,diff,typ){
@@ -89,30 +99,94 @@ function getAPIbyURL(final_url){
         })
 }
 */
-function createURLandGetAPI(categ,diff,typ){
+
+function waitingForButtonAnswers(){
+    const botonSubmit = document.getElementById('button-addon1')
+
+        botonSubmit.addEventListener('click', function(){
+            //Obtener valores del formulario.
+                let catego = document.getElementById('category')//category
+                let categ_val=catego.value;
+                if (categ_val=='any'){
+                    //trivia.setThisCategory(categ);
+                    categ_val='';
+                }else{
+                    //trivia.setThisCategory(categ);
+                }
+                getCategoryIDByName(categ_val);
+                /*
+                if(presupuesto_val>150000){
+                    //arrojara un mensaje de checa el modelo que te guste, todos estos solamente estan a tu disposicion
+                    mensaje_restrictivo();
+                    presupuesto_val=150000;
+                }
+*/
+               // var idAutos=obtenerId(marca_val,modelo_val, presupuesto_val, caja_val);
+
+                //add(autos, this.getAllList());
+        })
+}
+function createURLandGetAPI(list){
+
+    let categor=list[0];
+    let diffi=list[1];
+    let typp=list[2];
+    
+
     let url_base=`https://opentdb.com/api.php?amount=10`;
     let final_url=`${url_base}`;
-    if(categ>8 && categ <33){
-        final_url=`${final_url}&category=${categ}`;
+    if(categor>8 && categor <33){
+        final_url=`${final_url}&category=${categor}`;
     }
-    if(diff == 'easy'||diff == 'medium'||diff == 'hard' ){
-        final_url=`${final_url}&difficulty=${diff}`;
+    if(diffi == 'easy'||diffi == 'medium'||diffi == 'hard' ){
+        final_url=`${final_url}&difficulty=${diffi}`;
     }
-    if(typ == 'multiple'||typ == 'boolean' ){
-        final_url=`${final_url}&type=${typ}`
+    if(typp == 'multiple'||typp == 'boolean' ){
+        final_url=`${final_url}&type=${typp}`
     }
     axios.get(final_url)
         .then((response) => {
             let answer=response.data.results;
             //console.log(answer)
             trivia.addQuestions(answer);
-            console.log(trivia.getQuestion(1))//example of using the functions
+            console.log(trivia.getQuestion(4))//example of using the functions
            // return answer;
+            trivia.setThisCategory(categor);
+            trivia.setThisDifficulty(diffi);
+            trivia.setThisType(typp);
         })
         .catch( (err) =>{
 //aqui se pasa el error
 //console.log("aca el error", error.response.status)
         })
+}
+
+function typeAndDifiicultyGenerator(categ){
+    console.log(categ);
+    let diffi = document.getElementById('difficulty')//difficulty
+    let diffi_val=diffi.value;
+    if (diffi_val=='any'){
+        //trivia.setThisDifficulty(diffi_val);
+        diffi_val='';
+    }else{
+        //trivia.setThisDifficulty(diffi_val);
+    }
+    const diff= diffi_val;
+    console.log(diff)
+    
+
+    let typo = document.getElementById('type')//type
+    let type_val=typo.value;
+    if (type_val=='any'){
+        //trivia.setThisType(type_val);
+        type_val='';
+    }else{
+        //trivia.setThisType(type_val);
+    }
+    const typ= type_val;
+    console.log(typ)
+
+    createURLandGetAPI([categ,diff,typ]);
 }
 /*
 function init (){
@@ -121,8 +195,9 @@ function init (){
     trivia.start();
 }*/
 //let listTrivia=createURL(5,"medium","h")
-createURLandGetAPI(5,"medium","h")
+waitingForButtonAnswers();
 //console.log(listTrivia)
 console.log("Trivia");
+//console.log(getListOfCategories())
 //init();
 
